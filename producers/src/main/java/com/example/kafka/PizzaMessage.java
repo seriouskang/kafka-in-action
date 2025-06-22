@@ -7,18 +7,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class PizzaMessage {
+    private final Faker faker;
+    private final Random random;
     private static final List<String> pizzaNames = List.of("Potato Pizza", "Cheese Pizza",
             "Cheese Garlic Pizza", "Super Supreme", "Peperoni");
     private static final List<String> pizzaShop = List.of("A001", "B001", "C001",
             "D001", "E001", "F001", "G001", "H001", "I001", "J001", "K001", "L001", "M001", "N001",
             "O001", "P001", "Q001");
 
+
+    public PizzaMessage(Random random) {
+        this.faker = new Faker(random);
+        this.random = random;
+    }
+
     public String getRandomValueFromList(List<String> list, Random random) {
         int index = random.nextInt(list.size());
         return list.get(index);
     }
 
-    public Map<String, String> produceMsg(Faker faker, Random random, int id) {
+    public Map<String, String> produceMsg(int id) {
+        return produceMsg(faker, random, id);
+    }
+
+    private Map<String, String> produceMsg(Faker faker, Random random, int id) {
         String shopId = getRandomValueFromList(pizzaShop, random);
         String pizzaName = getRandomValueFromList(pizzaNames, random);
 
@@ -38,12 +50,10 @@ public class PizzaMessage {
         );
     }
     public static void main(String[] args) {
-        PizzaMessage pizzaMessage = new PizzaMessage();
-        Random random = new Random(2025);
-        Faker faker = Faker.instance(random);
+        PizzaMessage pizzaMessage = new PizzaMessage(new Random(2025));
 
         for(int i=0; i<60; i++) {
-            Map<String, String> message = pizzaMessage.produceMsg(faker, random, i);
+            Map<String, String> message = pizzaMessage.produceMsg(i);
             System.out.println("key:" + message.get("key") + ", message:" + message.get("message"));
         }
     }
