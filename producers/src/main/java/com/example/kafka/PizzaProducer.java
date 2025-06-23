@@ -34,6 +34,13 @@ public class PizzaProducer {
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
+//        ack setting
+//        props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
+
+//        batch setting
+//        props.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, "32000");
+//        props.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
+
         return props;
     }
 
